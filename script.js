@@ -417,21 +417,21 @@ function startSpeechRecognition() {
 lucide.createIcons();
 
 // --- Firebase Initialization (Simplified) ---
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-import { getFirestore, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
+//i//mport { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+//import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+//import { getFirestore, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+//
 const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
 let app, db, auth;
 setLogLevel('Debug');
-
-if (firebaseConfig) {
-    app = initializeApp(firebaseConfig);
-    db = getFirestore(app);
-    auth = getAuth(app);
-    signInAnonymously(auth); // Sign in anonymously for a token, if needed for future features.
-}
-
+//
+//if (firebaseConfig) {
+//   app = initializeApp(firebaseConfig);
+// db = getFirestore(app);
+//auth = getAuth(app);
+//signInAnonymously(auth); // Sign in anonymously for a token, if needed for future features.
+//}
+//*/
 // --- Scroll Rain Effect Logic (Unchanged) ---
 document.addEventListener('DOMContentLoaded', () => {
     const heroSection = document.getElementById('hero');
