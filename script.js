@@ -546,4 +546,3 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', handleScrollRain, { passive: true });
     handleScrollRain();
 });
-// --- END OF FILE ---q
