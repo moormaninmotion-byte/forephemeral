@@ -25,7 +25,7 @@ const IMAGE_URL = "https://generativelanguage.googleapis.com/v1beta/models/image
 // --- IMPORTANT: ADD YOUR API KEY HERE ---
 // Your Gemini API key is required to use the AI-powered features.
 // Get a key at https://aistudio.google.com/
-const API_KEY = "";
+const API_KEY = "AIzaSyBjx6ZDcU8GIBPFY4Q4eHOUsw6ixikpz18";
 
 // --- Helper Functions for TTS ---
 function base64ToArrayBuffer(base64) {
@@ -546,4 +546,4 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', handleScrollRain, { passive: true });
     handleScrollRain();
 });
-// --- END OF FILE ---
+// --- END OF FILE ---q
