@@ -36,7 +36,49 @@
         content="https://placehold.co/1200x630/000000/FFFFFF?text=Satirical+Corporate+Toolkit">
 
     <script src="https://cdn.tailwindcss.com"></script>
+<<<<<<< HEAD
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+=======
+    <!--custom javascript-->
+    <script src="script.js" defer></script>
+
+    <!-- Load Google Fonts: Playfair Display (H1), Open Sans (Headers/Body), Montserrat (Nav), and Nunito Sans (Body) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,700&family=Open+Sans:wght@400;6..12,700&family=Playfair+Display:wght@900&display=swap"
+        rel="stylesheet">
+
+    <!-- Load Lucide Icons for minimalist icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'accent-blue': '#00A7E1', // Cyber Blue Accent
+                        'bg-main-dark': '#1A1A1A', // Dark Charcoal background
+                        'text-main-light': '#F7F7F7', // Off-White main text
+                        'impact-subtle': '#333333', // Subtle dark number/icon on dark background (Improved Contrast)
+                        'aws-gold': '#FF9900',
+                        'azure-blue': '#0078D4',
+                        'gcp-red': '#DB4437',
+                        'k8s-purple': '#326CE5',
+                        'terra-green': '#6299D6', // Using a lighter blue-green for contrast
+                    },
+                    fontFamily: {
+                        playfair: ['Playfair Display', 'serif'],
+                        opensans: ['Open Sans', 'sans-serif'],
+                        montserrat: ['Montserrat', 'sans-serif'],
+                        nunitosans: ['Nunito Sans', 'sans-serif'],
+                        sans: ['Open Sans', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+>>>>>>> b1d2129 (Hi)
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -585,6 +627,7 @@
             output.classList.remove('hidden');
         }
 
+<<<<<<< HEAD
         function showError(message) {
             errorMessage.textContent = message;
             errorContainer.classList.remove('hidden');
@@ -597,3 +640,30 @@
 </body>
 
 </html>
+=======
+    <!-- Footer / Contact - Succinct Header (UPDATED) -->
+    <footer id="contact" class="bg-bg-main-dark text-text-main-light py-8 md:py-10 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 text-center">
+            <!-- H2 Heading: Open Sans (Bold) - THREE WORDS OR LESS -->
+            <h2 class="text-3xl sm:text-4xl text-accent-blue mb-4 mono-text">
+                ENGAGE
+            </h2>
+
+            <!-- Single Contact Point (CORRECTED URL AND SPACING) -->
+            <a href="http://forephemeral.run.place" target="_blank"
+                class="inline-block text-xl md:text-2xl text-text-main-light hover:text-accent-blue transition duration-200 mono-text tracking-widest">
+                FOREPHEMERAL.RUN.PLACE
+            </a>
+
+            <!-- Open Sans (Bold) (CONDENSED SPACING) -->
+            <div class="mt-4 pt-3 border-t border-gray-700 text-sm text-gray-500 mono-text">
+                © FOREPHEMERAL 2024
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Firebase and Gemini API integration + Scroll Rain Effect -->
+ 
+</body >
+</html >
+>>>>>>> b1d2129 (Hi)
