@@ -404,146 +404,141 @@ function startSpeechRecognition() {
         audioInputButton.classList.remove('animate-pulse');
     };
 
-        recognition.onerror = (event) => {
-            console.error("Speech Recognition Error:", event.error);
-            showMessage(`Speech recognition failed: ${event.error}`, 'error');
-            queryInput.placeholder = "e.g., Define FinOps and its core principles...";
-            queryInput.disabled = false;
-            audioInputButton.classList.remove('animate-pulse');
-        };
+    recognition.onerror = (event) => {
+        console.error("Speech Recognition Error:", event.error);
+        showMessage(`Speech recognition failed: ${event.error}`, 'error');
+        queryInput.placeholder = "e.g., Define FinOps and its core principles...";
+        queryInput.disabled = false;
+        audioInputButton.classList.remove('animate-pulse');
+    };
+}
+
+// Initialize Lucide Icons
+lucide.createIcons();
+
+const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+let app, db, auth;
+setLogLevel('Debug');
+
+if (firebaseConfig) {
+    app = initializeApp(firebaseConfig);
+    db = getFirestore(app);
+    auth = getAuth(app);
+    signInAnonymously(auth); // Sign in anonymously for a token, if needed for future features.
+}
+
+// --- Scroll Rain Effect Logic (Unchanged) ---
+document.addEventListener('DOMContentLoaded', () => {
+    const heroSection = document.getElementById('hero');
+    const scrollRainContainer = document.getElementById('scrollRainContainer');
+    const cloudLeft = document.getElementById('cloudLeft');
+    const solutionsSection = document.getElementById('solutions');
+
+    const CLOUD_MAX_OPACITY = 0.1;
+
+    // Initial cloud position is off-screen below the viewport
+    cloudLeft.style.transform = 'translateY(100vh)';
+    cloudLeft.style.opacity = '0';
+
+    const numDrops = 10;
+    const dropElements = [];
+    const dropTimeOffsets = [];
+
+    for (let i = 0; i < numDrops; i++) {
+        const drop = document.createElement('div');
+        drop.className = 'scroll-drop';
+        drop.style.left = `${Math.random() * 30}vw`;
+        const size = Math.random() * 4 + 4;
+        drop.style.width = `${size}px`;
+        drop.style.height = `${size}px`;
+        dropElements.push(drop);
+        scrollRainContainer.appendChild(drop);
+        dropTimeOffsets.push(Math.random() * 0.35);
     }
-    
-    // Initialize Lucide Icons
-    lucide.createIcons();
-    
-    // --- Firebase Initialization (Simplified) ---
-    import {initializeApp} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import {getAuth, signInAnonymously} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import {getFirestore, setLogLevel} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-    
-    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-    let app, db, auth;
-    setLogLevel('Debug');
-    
-    if (firebaseConfig) {
-        app = initializeApp(firebaseConfig);
-        db = getFirestore(app);
-        auth = getAuth(app);
-        signInAnonymously(auth); // Sign in anonymously for a token, if needed for future features.
-    }
-    
-    // --- Scroll Rain Effect Logic (Unchanged) ---
-    document.addEventListener('DOMContentLoaded', () => {
-        const heroSection = document.getElementById('hero');
-        const scrollRainContainer = document.getElementById('scrollRainContainer');
-        const cloudLeft = document.getElementById('cloudLeft');
-        const solutionsSection = document.getElementById('solutions');
-    
-        const CLOUD_MAX_OPACITY = 0.1;
-    
-        // Initial cloud position is off-screen below the viewport
-        cloudLeft.style.transform = 'translateY(100vh)';
-        cloudLeft.style.opacity = '0';
-    
-        const numDrops = 10;
-        const dropElements = [];
-        const dropTimeOffsets = [];
-    
-        for (let i = 0; i < numDrops; i++) {
-            const drop = document.createElement('div');
-            drop.className = 'scroll-drop';
-            drop.style.left = `${Math.random() * 30}vw`;
-            const size = Math.random() * 4 + 4;
-            drop.style.width = `${size}px`;
-            drop.style.height = `${size}px`;
-            dropElements.push(drop);
-            scrollRainContainer.appendChild(drop);
-            dropTimeOffsets.push(Math.random() * 0.35);
-        }
-    
-        dropElements.forEach(drop => {
-            drop.style.transform = 'translateY(100px)';
-            drop.style.opacity = '0';
-        });
-    
-        function handleScrollRain() {
-            const scrollY = window.scrollY;
-            const heroHeight = heroSection.offsetHeight;
-            const scrollDistance = heroHeight;
-            const currentScroll = Math.min(scrollDistance, Math.max(0, scrollY));
-            const scrollProgress = currentScroll / scrollDistance;
-    
-            // Cloud Scroll
-            const cloudScrollDuration = 0.5;
-            const cloudScrollProgress = Math.min(1, scrollProgress / cloudScrollDuration);
-            const cloudStartVH = 100;
-            const cloudEndVH = 20;
-            const cloudYVH = cloudStartVH + (cloudEndVH - cloudStartVH) * cloudScrollProgress;
-            cloudLeft.style.transform = `translateY(${cloudYVH}vh)`;
-    
-            // Cloud Opacity
-            let normalizedFadeOpacity = 1.0;
-            const fadeInStart = 0.0;
-            const fadeInEnd = 0.10;
-            if (scrollProgress < fadeInEnd) {
-                normalizedFadeOpacity = Math.min(1, (scrollProgress - fadeInStart) / (fadeInEnd - fadeInStart));
-            }
-            const fadeOutStart = 0.80;
-            const fadeOutEnd = 1.0;
-            if (scrollProgress > fadeOutStart) {
-                normalizedFadeOpacity = Math.max(0, 1 - (scrollProgress - fadeOutStart) / (fadeOutEnd - fadeOutStart));
-            }
-            cloudLeft.style.opacity = (normalizedFadeOpacity * CLOUD_MAX_OPACITY).toFixed(3);
-    
-            // Drop Movement
-            const cloudBottomOffsetPixels = (cloudYVH / 100) * window.innerHeight;
-            const cloudYAbsolute = window.innerHeight - cloudBottomOffsetPixels;
-            const heroTop = heroSection.offsetTop;
-            const solutionsOffsetTop = solutionsSection.offsetTop;
-            const splashYAbsoluteTarget = solutionsOffsetTop + 10;
-            const dropStartOffsetAbsolute = heroTop + cloudYAbsolute + 200;
-            const dropTravelRange = splashYAbsoluteTarget - dropStartOffsetAbsolute;
-            const cycleLength = 0.35;
-    
-            dropElements.forEach((drop, index) => {
-                const offset = dropTimeOffsets[index];
-                let effectiveProgress = (scrollProgress + offset) % cycleLength;
-                let normalizedCycleProgress = effectiveProgress / cycleLength;
-    
-                if (normalizedFadeOpacity > 0.001) {
-                    if (normalizedCycleProgress < 0.8) {
-                        drop.style.opacity = normalizedFadeOpacity.toFixed(3);
-                        drop.classList.remove('splashing');
-    
-                        let distanceTraveled = normalizedCycleProgress * dropTravelRange / 0.8;
-                        let dropYAbsolute = dropStartOffsetAbsolute + distanceTraveled;
-                        let dropYRelative = dropYAbsolute - heroTop;
-    
-                        drop.style.transform = `translateY(${dropYRelative}px)`;
-                    }
-                    else {
-                        const splashYRelative = splashYAbsoluteTarget - heroTop;
-    
-                        if (normalizedCycleProgress > 0.8 && normalizedCycleProgress < 0.9) {
-                            if (!drop.classList.contains('splashing')) {
-                                drop.classList.add('splashing');
-                                drop.style.opacity = normalizedFadeOpacity.toFixed(3);
-                                drop.style.transform = `translateY(${splashYRelative}px)`;
-                            }
-                        }
-    
-                        if (normalizedCycleProgress >= 0.95) {
-                            drop.style.opacity = '0';
-                            drop.classList.remove('splashing');
-                        }
-                    }
-                } else {
-                    drop.style.opacity = '0';
-                }
-            });
-        }
-    
-        window.addEventListener('scroll', handleScrollRain, {passive: true });
-        handleScrollRain();
+
+    dropElements.forEach(drop => {
+        drop.style.transform = 'translateY(100px)';
+        drop.style.opacity = '0';
     });
-    // --- END OF FILE ---
+
+    function handleScrollRain() {
+        const scrollY = window.scrollY;
+        const heroHeight = heroSection.offsetHeight;
+        const scrollDistance = heroHeight;
+        const currentScroll = Math.min(scrollDistance, Math.max(0, scrollY));
+        const scrollProgress = currentScroll / scrollDistance;
+
+        // Cloud Scroll
+        const cloudScrollDuration = 0.5;
+        const cloudScrollProgress = Math.min(1, scrollProgress / cloudScrollDuration);
+        const cloudStartVH = 100;
+        const cloudEndVH = 20;
+        const cloudYVH = cloudStartVH + (cloudEndVH - cloudStartVH) * cloudScrollProgress;
+        cloudLeft.style.transform = `translateY(${cloudYVH}vh)`;
+
+        // Cloud Opacity
+        let normalizedFadeOpacity = 1.0;
+        const fadeInStart = 0.0;
+        const fadeInEnd = 0.10;
+        if (scrollProgress < fadeInEnd) {
+            normalizedFadeOpacity = Math.min(1, (scrollProgress - fadeInStart) / (fadeInEnd - fadeInStart));
+        }
+        const fadeOutStart = 0.80;
+        const fadeOutEnd = 1.0;
+        if (scrollProgress > fadeOutStart) {
+            normalizedFadeOpacity = Math.max(0, 1 - (scrollProgress - fadeOutStart) / (fadeOutEnd - fadeOutStart));
+        }
+        cloudLeft.style.opacity = (normalizedFadeOpacity * CLOUD_MAX_OPACITY).toFixed(3);
+
+        // Drop Movement
+        const cloudBottomOffsetPixels = (cloudYVH / 100) * window.innerHeight;
+        const cloudYAbsolute = window.innerHeight - cloudBottomOffsetPixels;
+        const heroTop = heroSection.offsetTop;
+        const solutionsOffsetTop = solutionsSection.offsetTop;
+        const splashYAbsoluteTarget = solutionsOffsetTop + 10;
+        const dropStartOffsetAbsolute = heroTop + cloudYAbsolute + 200;
+        const dropTravelRange = splashYAbsoluteTarget - dropStartOffsetAbsolute;
+        const cycleLength = 0.35;
+
+        dropElements.forEach((drop, index) => {
+            const offset = dropTimeOffsets[index];
+            let effectiveProgress = (scrollProgress + offset) % cycleLength;
+            let normalizedCycleProgress = effectiveProgress / cycleLength;
+
+            if (normalizedFadeOpacity > 0.001) {
+                if (normalizedCycleProgress < 0.8) {
+                    drop.style.opacity = normalizedFadeOpacity.toFixed(3);
+                    drop.classList.remove('splashing');
+
+                    let distanceTraveled = normalizedCycleProgress * dropTravelRange / 0.8;
+                    let dropYAbsolute = dropStartOffsetAbsolute + distanceTraveled;
+                    let dropYRelative = dropYAbsolute - heroTop;
+
+                    drop.style.transform = `translateY(${dropYRelative}px)`;
+                }
+                else {
+                    const splashYRelative = splashYAbsoluteTarget - heroTop;
+
+                    if (normalizedCycleProgress > 0.8 && normalizedCycleProgress < 0.9) {
+                        if (!drop.classList.contains('splashing')) {
+                            drop.classList.add('splashing');
+                            drop.style.opacity = normalizedFadeOpacity.toFixed(3);
+                            drop.style.transform = `translateY(${splashYRelative}px)`;
+                        }
+                    }
+
+                    if (normalizedCycleProgress >= 0.95) {
+                        drop.style.opacity = '0';
+                        drop.classList.remove('splashing');
+                    }
+                }
+            } else {
+                drop.style.opacity = '0';
+            }
+        });
+    }
+
+    window.addEventListener('scroll', handleScrollRain, { passive: true });
+    handleScrollRain();
+});
+// --- END OF FILE ---
